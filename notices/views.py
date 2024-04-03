@@ -3,4 +3,4 @@ from django.http import HttpResponse  # type: ignore # noqa: F401
 
 
 def home(request):
-    return render(request, 'notices/home.html')
+    return render(request, 'notices/pages/home.html')
