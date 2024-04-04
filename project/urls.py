@@ -4,5 +4,5 @@ from django.urls import path, include  # type: ignore # noqa: F401
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', include('notices.urls'))
+    path('', include('news.urls'))
 ]
