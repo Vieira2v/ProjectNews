@@ -54,6 +54,7 @@
         .container {
             max-width: 144rem;
             margin: 0 auto;
+            padding: 3rem;
         }
 
         .header-title {
@@ -107,6 +108,95 @@
 
         .category-sport {
             padding-right: 2rem;
+        }
+
+        .main-content-container {
+            padding-top: 3rem;
+        }
+
+        .main-content {
+            padding-top: 0;
+        }
+
+        .main-content-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(34rem, 1fr));
+            gap: 4rem;
+        }
+
+        .news {
+            border-radius: .8rem;
+            overflow: hidden;
+        }
+
+        .news img {
+            max-width: 100%;
+        }
+
+        .news-list-item {
+            max-width: 64rem;
+        }
+
+        .news-title-container a {
+            font-size: 2rem;
+            color: #000000;
+        }
+
+        .news-title-item {
+            transition: all 300ms ease-in-out;
+            transform: scale(1);
+        }
+
+        .news-title-item:hover {
+            transform: scale(1.02);
+        }
+
+        .news-title-container {
+            padding-left: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .news-author {
+            padding-left: 1rem;
+            color: #1c1c1c67;
+        }
+
+        .news-content {
+            padding: 1rem;
+        }
+
+        .news-author a {
+            color: #000000;
+            font-optical-sizing: auto;
+            font-weight: 600;
+            font-style: normal;
+            transition: all 300ms ease-in-out;
+        }
+
+        .news-author a:hover {
+            color: #00000079;
+        }
+
+        .news-content {
+            padding-left: 1rem;
+        }
+
+        .main-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #a30101;
+            color: #000000;
+            padding: 3rem;
+        }
+
+        .main-footer a {
+            color: #ffffff;
+            transition: all 300ms ease-in-out;
+        }
+
+        .main-footer a:hover {
+            color: #c5c5c5;
         }
     </style>
 </head>

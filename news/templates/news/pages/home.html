@@ -1,7 +1,20 @@
 {% include "news/partials/head.html" %}
 
 <body>
-{% include "news/partials/header.html" %}
+    {% include "news/partials/header.html" %}
+
+    <main class="main-content-container">
+        <div class="main-content main-content-list container">
+           {% include "news/partials/new.html" %}
+           {% include "news/partials/new.html" %}
+           {% include "news/partials/new.html" %}
+           {% include "news/partials/new.html" %}
+           {% include "news/partials/new.html" %}
+           {% include "news/partials/new.html" %}
+        </div>
+    </main>
+
+    {% include "news/partials/footer.html" %}
 </body>
 
 </html>
