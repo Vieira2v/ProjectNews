@@ -1,20 +1,11 @@
-{% include "news/partials/head.html" %}
+{% extends "global/base.html" %}
 
-<body>
-    {% include "news/partials/header.html" %}
+{% block title %}News at all times | {% endblock title %}
 
-    <main class="main-content-container">
-        <div class="main-content main-content-list container">
-           {% include "news/partials/news.html" %}
-           {% include "news/partials/news.html" %}
-           {% include "news/partials/news.html" %}
-           {% include "news/partials/news.html" %}
-           {% include "news/partials/news.html" %}
-           {% include "news/partials/news.html" %}
-        </div>
-    </main>
-
-    {% include "news/partials/footer.html" %}
-</body>
-
-</html>
+{% block content %}
+<div class="main-content main-content-list container">
+    {% for new in news %}
+        {% include "news/partials/news.html" %}
+    {% endfor %}
+</div>
+{% endblock content %}

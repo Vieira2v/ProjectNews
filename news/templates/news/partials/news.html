@@ -1,35 +1,35 @@
 <div class="news news-list-item">
     <div class="news-cover">
-        <img src="https://placehold.co/1280x720/000000/FFFFFF/png" alt="Temporário">
+        <img src="{{ new.cover.url }}" alt="Temporário">
     </div>
     <div class="news-title-container">
-        <a href="/new/3/">
-            <h2 class="news-title-item">As explicações de Israel para os ataques a civis que estremeceram relação com os EUA.</h2>
+        <a href="{% url "news:detail" new.id %}">
+            <h2 class="news-title-item">{{ new.title }}</h2>
         </a>
     </div>
 
     <div class="news-author">
         <span class="news-author-item">
             <i class="fas fa-user">
-                Bruno Vieira
+                {{ new.author.first_name}} {{ new.author.last_name}}
             </i>
         </span>
 
         <span class="news-author-item">
             <i class="fas fa-calendar-alt">
-                05/04/2024 ás 19:26
+                {{ new.created_at }}
             </i>
         </span>
 
-        <span class="news-author-item">
+        <span class="news-category-item">
             <a href="news/category/international">
                 <i class="fas fa-layer-group"></i>
-                <span>International</span>
+                <span>{{ new.category.name}}</span>
             </a>
         </span>
     </div>
 
     <div class="news-content">
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam, corrupti rerum aspernatur eveniet voluptate placeat.</p>
+        <p>{{ new.description }}</p>
     </div>
 </div>

@@ -1,0 +1,15 @@
+<h1 class="news-title-detail">{{ new.title }} </h1>
+<div class="news-cover-detail">
+    <img class="cover-detail" src="{{ new.cover.url }}" alt="Temporário">
+    <h6 class="author-detail">
+        By: {{ new.author.first_name}} {{ new.author.last_name}}
+    </h6>
+    
+    <span class="news-date">
+        {{ new.created_at }}
+    </span>
+</div>
+
+<div class="news-content-detail">
+    <p>{{ new.news_content }}</p>
+</div>

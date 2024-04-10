@@ -1,30 +1,9 @@
-{% include "news/partials/head.html" %}
+{% extends "global/base.html" %}
 
-<body>
-    {% include "news/partials/header.html" %}
+{% block title %}Alterar | {% endblock title %}
 
-    <main class="main-content-container">
-        <div class="main-content main-content-detail container">
-            <h1 class="news-title-detail">As explicações de Israel para os ataques a civis que estremeceram relação com os EUA.</h1>
-
-            <div class="news-cover-detail">
-                <img class="cover-detail" src="https://placehold.co/1280x720/000000/FFFFFF/png" alt="Temporário">
-                <h6 class="author-detail">
-                    By: Bruno Vieira
-                </h6>
-                
-                <span class="news-date">
-                    05/04/2024 at 7:26 PM
-                </span>
-            </div>
-
-            <div class="news-content-detail">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut rerum dolorem ab, quia perferendis minus asperiores praesentium quae quis pariatur provident voluptatum hic eum nam corrupti perspiciatis error doloribus quo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut rerum dolorem ab, quia perferendis minus asperiores praesentium quae quis pariatur provident voluptatum hic eum nam corrupti perspiciatis error doloribus quo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut rerum dolorem ab, quia perferendis minus asperiores praesentium quae quis pariatur provident voluptatum hic eum nam corrupti perspiciatis error doloribus quo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut rerum dolorem ab, quia perferendis minus asperiores praesentium quae quis pariatur provident voluptatum hic eum nam corrupti perspiciatis error doloribus quo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut rerum dolorem ab, quia perferendis minus asperiores praesentium quae quis pariatur provident voluptatum hic eum nam corrupti perspiciatis error doloribus quo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut rerum dolorem ab, quia perferendis minus asperiores praesentium quae quis pariatur provident voluptatum hic eum nam corrupti perspiciatis error doloribus quo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut rerum dolorem ab, quia perferendis minus asperiores praesentium quae quis pariatur provident voluptatum hic eum nam corrupti perspiciatis error doloribus quo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut rerum dolorem ab, quia perferendis minus asperiores praesentium quae quis pariatur provident voluptatum hic eum nam corrupti perspiciatis error doloribus quo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut rerum dolorem ab, quia perferendis minus asperiores praesentium quae quis pariatur provident voluptatum hic eum nam corrupti perspiciatis error doloribus quo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut rerum dolorem ab, quia perferendis minus asperiores praesentium quae quis pariatur provident voluptatum hic eum nam corrupti perspiciatis error doloribus quo.</p>
-            </div>
-        </div>
-    </main>
-
-    {% include "news/partials/footer.html" %}
-</body>
-
-</html>
+{% block content %}
+<div class="main-content main-content-detail container">
+    {% include "news/partials/news-detail.html" %}
+</div>
+{% endblock content %}
