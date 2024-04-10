@@ -1,8 +1,9 @@
 from django.urls import path  # type: ignore # noqa: F401
 from django.http import HttpResponse  # type: ignore # noqa: F401
-from news.views import home
+from . import views
 
 
 urlpatterns = [
-    path('', home),
+    path('', views.home),
+    path('new/<int:id>/', views.new),
 ]
