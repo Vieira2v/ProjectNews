@@ -11,7 +11,15 @@
     <div class="news-author">
         <span class="news-author-item">
             <i class="fas fa-user">
-                {{ new.author.first_name}} {{ new.author.last_name}}
+                {% if new.author is not None %}
+                    {% if new.author.first_name %}
+                        {{ new.author.first_name}} {{ new.author.last_name}}
+                    {% else %}
+                        {{ new.author.username }}
+                    {% endif %}
+                {% else %}
+                    Anonymous
+                {% endif %}
             </i>
         </span>
 
@@ -21,12 +29,14 @@
             </i>
         </span>
 
-        <span class="news-category-item">
-            <a href="news/category/international">
-                <i class="fas fa-layer-group"></i>
-                <span>{{ new.category.name}}</span>
-            </a>
-        </span>
+        {% if new.category is not None %}
+            <span class="news-category-item">
+                <a href="{% url "news:category" new.category.id %}">
+                    <i class="fas fa-layer-group"></i>
+                    <span>{{ new.category.name}}</span>
+                </a>
+            </span>
+        {% endif %}
     </div>
 
     <div class="news-content">

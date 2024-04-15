@@ -1,13 +1,11 @@
 {% extends "global/base.html" %}
 
-{% block title %}News at all times | {% endblock title %}
+{% block title %}{{ title }}{% endblock title %}
 
 {% block content %}
 <div class="main-content main-content-list container">
     {% for new in news %}
         {% include "news/partials/news.html" %}
-    {% empty %}
-        <h1 class="center">No recipes found here</h1>
     {% endfor %}
 </div>
 {% endblock content %}
