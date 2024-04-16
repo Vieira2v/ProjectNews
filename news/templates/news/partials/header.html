@@ -8,11 +8,10 @@
         </h1>
     </div>
     <div class="main-container-category">
-        <form action="">
-        <a class= "category-international" href="{% url "news:search" %}">
+        <a class= "category-international" href="{% url "news:international" category_id=1  %}">
             <li>International</li>
         </a>
-        <a class="category-economy" href="/">
+        <a class="category-economy" href="{% url "news:economy" category_id=2  %}">
             <li>Economy</li>
         </a>
         <a class="category-technology" href="/">

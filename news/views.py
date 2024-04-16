@@ -39,5 +39,31 @@ def new(request, id):
     })
 
 
-def search(request):
-    return render(request, 'news/pages/search.html')
+def international(request, category_id):
+    news = News.objects.filter(
+        category__id=category_id,
+        is_published=True,
+    ).order_by('-id')
+
+    if not news:
+        raise Http404('Not found')
+
+    return render(request, 'news/pages/international.html', context={
+        'news': news,
+        'title': f'{news.first().category.name} - Category |'
+    })
+
+
+def economy(request, category_id):
+    news = News.objects.filter(
+        category__id=category_id,
+        is_published=True,
+    ).order_by('-id')
+
+    if not news:
+        raise Http404('Not found')
+
+    return render(request, 'news/pages/economy.html', context={
+        'news': news,
+        'title': f'{news.first().category.name} - Category |'
+    })
