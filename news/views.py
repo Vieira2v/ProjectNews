@@ -37,3 +37,7 @@ def new(request, id):
         'new': new,
         'is_detail_page': True,
     })
+
+
+def search(request):
+    return render(request, 'news/pages/search.html')

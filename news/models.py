@@ -15,7 +15,7 @@ class Category(models.Model):
 class News(models.Model):
     title = models.CharField(max_length=80)
     description = models.CharField(max_length=180)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     news_content = models.TextField()
     news_content_is_html = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
