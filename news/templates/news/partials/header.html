@@ -8,22 +8,22 @@
         </h1>
     </div>
     <div class="main-container-category">
-        <a class= "category-international" href="{% url "news:international" category_id=1  %}">
+        <a class= "category-international" href="{% url "news:international" category_id=1 %}">
             <li>International</li>
         </a>
-        <a class="category-economy" href="{% url "news:economy" category_id=2  %}">
+        <a class="category-economy" href="{% url "news:economy" category_id=2 %}">
             <li>Economy</li>
         </a>
-        <a class="category-technology" href="/">
+        <a class="category-technology" href="{% url "news:technology" category_id=3 %}">
             <li>Technology</li>
         </a>
-        <a class="category-health" href="/">
+        <a class="category-health" href="{% url "news:health" category_id=4 %}">
             <li>Health</li>
         </a>
-        <a class="category-science" href="/">
+        <a class="category-science" href="{% url "news:science" category_id=5 %}">
             <li>Science</li>
         </a>
-        <a class="category-sport" href="/">
+        <a class="category-sport" href="{% url "news:sport" category_id=8 %}">
             <li>Sport</li>
         </a>
     </div>

@@ -67,3 +67,63 @@ def economy(request, category_id):
         'news': news,
         'title': f'{news.first().category.name} - Category |'
     })
+
+
+def technology(request, category_id):
+    news = News.objects.filter(
+        category__id=category_id,
+        is_published=True,
+    ).order_by('-id')
+
+    if not news:
+        raise Http404('Not found')
+
+    return render(request, 'news/pages/technology.html', context={
+        'news': news,
+        'title': f'{news.first().category.name} - Technology |'
+    })
+
+
+def health(request, category_id):
+    news = News.objects.filter(
+        category__id=category_id,
+        is_published=True,
+    ).order_by('-id')
+
+    if not news:
+        raise Http404('Not found')
+
+    return render(request, 'news/pages/health.html', context={
+        'news': news,
+        'title': f'{news.first().category.name} - Health |'
+    })
+
+
+def science(request, category_id):
+    news = News.objects.filter(
+        category__id=category_id,
+        is_published=True,
+    ).order_by('-id')
+
+    if not news:
+        raise Http404('Not found')
+
+    return render(request, 'news/pages/science.html', context={
+        'news': news,
+        'title': f'{news.first().category.name} - Science |'
+    })
+
+
+def sport(request, category_id):
+    news = News.objects.filter(
+        category__id=category_id,
+        is_published=True,
+    ).order_by('-id')
+
+    if not news:
+        raise Http404('Not found')
+
+    return render(request, 'news/pages/sport.html', context={
+        'news': news,
+        'title': f'{news.first().category.name} - Sport |'
+    })

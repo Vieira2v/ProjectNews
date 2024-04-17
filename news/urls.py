@@ -12,4 +12,12 @@ urlpatterns = [
          views.international, name="international"),
     path('new/economy/<int:category_id>/',
          views.economy, name="economy"),
+    path('new/technology/<int:category_id>/',
+         views.technology, name="technology"),
+    path('new/health/<int:category_id>/',
+         views.health, name="health"),
+    path('new/science/<int:category_id>/',
+         views.science, name="science"),
+    path('new/sport/<int:category_id>/',
+         views.sport, name="sport"),
 ]
