@@ -1,6 +1,10 @@
 <div class="news news-list-item">
     <div class="news-cover">
-        <img src="{{ new.cover.url }}" alt="Temporário">
+        {% if new.cover %}
+            <img src="{{ new.cover.url }}" alt="Temporário">
+        {% else %}
+            <p>No cover image available</p>
+        {% endif %}
     </div>
     <div class="news-title-container">
         <a href="{% url "news:detail" new.id %}">

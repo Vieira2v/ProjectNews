@@ -33,6 +33,9 @@ def new(request, id):
         is_published=True,
     ).order_by('-id').first()
 
+    if not new:
+        raise Http404('Not found')
+
     return render(request, 'news/pages/news-view.html', context={
         'new': new,
         'is_detail_page': True,
