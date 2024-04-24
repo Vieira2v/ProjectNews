@@ -8,10 +8,6 @@ class NewsURLsTest(TestCase):
         url = reverse('news:home')
         self.assertEqual(url, '/')
 
-    def test_news_category_url_is_correct(self):
-        url = reverse('news:category', kwargs={'category_id': 1})
-        self.assertEqual(url, '/news/category/1/')
-
     def test_news_detail_url_is_correct(self):
         url = reverse('news:detail', kwargs={'id': 1})
         self.assertEqual(url, '/news/1/')

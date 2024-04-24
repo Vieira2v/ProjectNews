@@ -1,13 +1,11 @@
-from django.test import TestCase  # type: ignore # noqa: F401
 from django.urls import reverse, resolve  # type: ignore # noqa: F401
 # Reverse é usado para buscar a url que eu quero.
 # Resolve é usado para saber qual função esta sendo usando por uma url.
 from news import views
-from news.models import Category, News
-from django.contrib.auth.models import User  # type: ignore # noqa: F401
+from .test_news_base import NewsTestBase  # type: ignore # noqa: F401
 
 
-class NewsViewsTest(TestCase):
+class NewsViewsTest(NewsTestBase):
     def test_news_home_views_function_is_correct(self):
         view = resolve(reverse('news:home'))
         self.assertIs(view.func, views.home)
@@ -27,7 +25,7 @@ class NewsViewsTest(TestCase):
 
     def test_news_home_template_shows_no_news_found_if_no_news(self):
         response = self.client.get(reverse('news:home'))
-        self.assertIn('No recipes found here',
+        self.assertIn('No news found here',
                       response.content.decode('utf-8'))
         # self.assertIn('No recipes found here', ...)
         # está sendo usado para verificar se a string 'No recipes found here'
@@ -40,26 +38,7 @@ class NewsViewsTest(TestCase):
         # para decodificar essa sequência de bytes em uma string legível.
 
     def test_news_home_template_loads_news(self):
-        category = Category.objects.create(name='Category')
-        author = User.objects.create_user(
-            first_name='user',
-            last_name='name',
-            username='username',
-            password='1234567',
-            email='user@email.com',)
-        news = News.objects.create(  # noqa: F841
-            category=category,
-            author=author,
-            title='News Title',
-            description='News Description',
-            slug='news-slug',
-            news_content='News Content',
-            news_content_is_html=False,
-            is_published=True,
-            # Notícia criada.
-            # Este trecho de código acima é para dar suporte ao meu código,
-            # chamado de fixtures.
-        )
+        self.make_news()
         response = self.client.get(reverse('news:home'))
         # Meu cliente fez acesso a minha home.
         content = response.content.decode('utf-8')
@@ -68,18 +47,15 @@ class NewsViewsTest(TestCase):
         # Aqui estou pegando todas as receitas que teu no meu contexto.
         # No caso 1 pq eu só criei 1.
         self.assertIn('News Title', content)
-        self.assertIn('News Description', content)
         # E agora eu testei se tem as frase no conteudo.
         self.assertEqual(len(response_context_news), 1)
 
-    def test_news_category_views_function_is_correct(self):
-        view = resolve(reverse('news:category', kwargs={'category_id': 1000}))
-        self.assertIs(view.func, views.category)
-
-    def test_news_category_views_returns_404_if_no_news_found(self):
-        response = self.client.get(
-            reverse('news:category', kwargs={'category_id': 1000}))
-        self.assertEqual(response.status_code, 404)
+    def test_news_home_template_dont_load_news_not_published(self):
+        self.make_news(is_published=False)
+        response = self.client.get(reverse('news:home'))
+        # Meu cliente fez acesso a minha home.
+        self.assertIn('No news found here',
+                      response.content.decode('utf-8'))
 
     def test_news_detail_views_function_is_correct(self):
         view = resolve(reverse('news:detail', kwargs={'id': 1}))
@@ -88,6 +64,24 @@ class NewsViewsTest(TestCase):
     def test_news_detail_views_returns_404_if_no_news_found(self):
         response = self.client.get(
             reverse('news:detail', kwargs={'id': 1000}))
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_news_detail_template_loads_the_correct_news(self):
+        needed_title = 'This is a detail page - It load one news'
+        self.make_news(title=needed_title)
+
+        response = self.client.get(
+            reverse('news:detail', kwargs={'id': 1}))
+        content = response.content.decode('utf-8')
+
+        self.assertIn(needed_title, content)
+
+    def test_news_detail_template_dont_load_news_not_published(self):
+        news = self.make_news(is_published=False)
+        response = self.client.get(
+            reverse('news:detail',
+                    kwargs={'id': news.id}))
         self.assertEqual(response.status_code, 404)
 
     def test_news_international_views_function_is_correct(self):
@@ -100,6 +94,23 @@ class NewsViewsTest(TestCase):
             reverse('news:international', kwargs={'category_id': 1000}))
         self.assertEqual(response.status_code, 404)
 
+    def test_news_international_template_loads_news(self):
+        needed_title = 'This is a international page'
+        self.make_news(title=needed_title)
+
+        response = self.client.get(
+            reverse('news:international', kwargs={'category_id': 1}))
+        content = response.content.decode('utf-8')
+
+        self.assertIn(needed_title, content)
+
+    def test_news_international_template_dont_load_news_not_published(self):
+        news = self.make_news(is_published=False)
+        response = self.client.get(
+            reverse('news:international',
+                    kwargs={'category_id': news.category.id}))
+        self.assertEqual(response.status_code, 404)
+
     def test_news_economy_views_function_is_correct(self):
         view = resolve(
             reverse('news:economy', kwargs={'category_id': 1}))
@@ -108,6 +119,23 @@ class NewsViewsTest(TestCase):
     def test_news_economy_views_returns_404_if_no_news_found(self):
         response = self.client.get(
             reverse('news:economy', kwargs={'category_id': 1000}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_news_economy_template_loads_news(self):
+        needed_title = 'This is a economy page'
+        self.make_news(title=needed_title)
+
+        response = self.client.get(
+            reverse('news:economy', kwargs={'category_id': 1}))
+        content = response.content.decode('utf-8')
+
+        self.assertIn(needed_title, content)
+
+    def test_news_economy_template_dont_load_news_not_published(self):
+        news = self.make_news(is_published=False)
+        response = self.client.get(
+            reverse('news:economy',
+                    kwargs={'category_id': news.category.id}))
         self.assertEqual(response.status_code, 404)
 
     def test_news_technology_views_function_is_correct(self):
@@ -120,6 +148,23 @@ class NewsViewsTest(TestCase):
             reverse('news:technology', kwargs={'category_id': 1000}))
         self.assertEqual(response.status_code, 404)
 
+    def test_news_technology_template_loads_news(self):
+        needed_title = 'This is a technology page'
+        self.make_news(title=needed_title)
+
+        response = self.client.get(
+            reverse('news:technology', kwargs={'category_id': 1}))
+        content = response.content.decode('utf-8')
+
+        self.assertIn(needed_title, content)
+
+    def test_news_technology_template_dont_load_news_not_published(self):
+        news = self.make_news(is_published=False)
+        response = self.client.get(
+            reverse('news:technology',
+                    kwargs={'category_id': news.category.id}))
+        self.assertEqual(response.status_code, 404)
+
     def test_news_health_views_function_is_correct(self):
         view = resolve(
             reverse('news:health', kwargs={'category_id': 1}))
@@ -128,6 +173,23 @@ class NewsViewsTest(TestCase):
     def test_news_health_views_returns_404_if_no_news_found(self):
         response = self.client.get(
             reverse('news:health', kwargs={'category_id': 1000}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_news_health_template_loads_news(self):
+        needed_title = 'This is a health page'
+        self.make_news(title=needed_title)
+
+        response = self.client.get(
+            reverse('news:health', kwargs={'category_id': 1}))
+        content = response.content.decode('utf-8')
+
+        self.assertIn(needed_title, content)
+
+    def test_news_health_template_dont_load_news_not_published(self):
+        news = self.make_news(is_published=False)
+        response = self.client.get(
+            reverse('news:health',
+                    kwargs={'category_id': news.category.id}))
         self.assertEqual(response.status_code, 404)
 
     def test_news_science_views_function_is_correct(self):
@@ -140,6 +202,23 @@ class NewsViewsTest(TestCase):
             reverse('news:science', kwargs={'category_id': 1000}))
         self.assertEqual(response.status_code, 404)
 
+    def test_news_science_template_loads_news(self):
+        needed_title = 'This is a science page'
+        self.make_news(title=needed_title)
+
+        response = self.client.get(
+            reverse('news:science', kwargs={'category_id': 1}))
+        content = response.content.decode('utf-8')
+
+        self.assertIn(needed_title, content)
+
+    def test_news_science_template_dont_load_news_not_published(self):
+        news = self.make_news(is_published=False)
+        response = self.client.get(
+            reverse('news:science',
+                    kwargs={'category_id': news.category.id}))
+        self.assertEqual(response.status_code, 404)
+
     def test_news_sport_views_function_is_correct(self):
         view = resolve(
             reverse('news:sport', kwargs={'category_id': 1}))
@@ -148,4 +227,21 @@ class NewsViewsTest(TestCase):
     def test_news_sport_views_returns_404_if_no_news_found(self):
         response = self.client.get(
             reverse('news:sport', kwargs={'category_id': 1000}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_news_sport_template_loads_news(self):
+        needed_title = 'This is a sport page'
+        self.make_news(title=needed_title)
+
+        response = self.client.get(
+            reverse('news:sport', kwargs={'category_id': 1}))
+        content = response.content.decode('utf-8')
+
+        self.assertIn(needed_title, content)
+
+    def test_news_sport_template_dont_load_news_not_published(self):
+        news = self.make_news(is_published=False)
+        response = self.client.get(
+            reverse('news:sport',
+                    kwargs={'category_id': news.category.id}))
         self.assertEqual(response.status_code, 404)

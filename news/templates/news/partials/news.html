@@ -35,10 +35,8 @@
 
         {% if new.category is not None %}
             <span class="news-category-item">
-                <a href="{% url "news:category" new.category.id %}">
-                    <i class="fas fa-layer-group"></i>
-                    <span>{{ new.category.name}}</span>
-                </a>
+                <i class="fas fa-layer-group"></i>
+                <span>{{ new.category.name }}</span>
             </span>
         {% endif %}
     </div>

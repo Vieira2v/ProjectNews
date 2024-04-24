@@ -1,6 +1,10 @@
 <h1 class="news-title-detail">{{ new.title }} </h1>
 <div class="news-cover-detail">
-    <img class="cover-detail" src="{{ new.cover.url }}" alt="Temporário">
+    {% if new.cover %}
+        <img src="{{ new.cover.url }}" alt="Temporário">
+    {% else %}
+        <p>No cover image available</p>
+    {% endif %}
     <h6 class="author-detail">
         By: {{ new.author.first_name}} {{ new.author.last_name}}
     </h6>
