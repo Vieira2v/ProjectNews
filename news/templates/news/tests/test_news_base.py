@@ -4,8 +4,6 @@ from django.contrib.auth.models import User  # type: ignore # noqa: F401
 
 
 class NewsTestBase(TestCase):
-    def setUp(self) -> None:
-        return super().setUp()
 
     def make_category(self, name='Category'):
         return Category.objects.create(name=name)
@@ -29,7 +27,7 @@ class NewsTestBase(TestCase):
         self,
         category_data=None,
         author_data=None,
-        title='News Title',
+        title=None,
         description='News Description',
         slug='news-slug',
         news_content='News Content',
@@ -41,6 +39,9 @@ class NewsTestBase(TestCase):
 
         if author_data is None:
             author_data = {}
+
+        if title is None:
+            title = 'News Title'  # Título padrão se nenhum for especificado.
 
         return News.objects.create(  # noqa: F841
             category=self.make_category(**category_data),

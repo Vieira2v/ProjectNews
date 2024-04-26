@@ -22,7 +22,7 @@ class News(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
     cover = models.ImageField(
-        upload_to='news/covers/%Y/%m/%d/',)
+        upload_to='news/covers/%Y/%m/%d/', blank=True)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, blank=True,
         default=None,
