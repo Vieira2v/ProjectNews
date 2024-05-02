@@ -11,6 +11,7 @@
 
     <main class="main-content-container">
         {% block content %}{% endblock content %}
+        {% include "news/partials/pagination.html" %}
     </main>
 
     {% include "news/partials/footer.html" %}
