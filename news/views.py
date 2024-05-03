@@ -3,6 +3,7 @@ from news.models import News
 from django.http import Http404  # type: ignore # noqa: F401
 from utils.pagination import make_pagination
 import os
+from django.contrib import messages  # type: ignore # noqa: F401
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 6))
 
@@ -12,6 +13,8 @@ def home(request):
         is_published=True,
     ).order_by('-id')
     page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
+
+    messages.success(request, 'SUCCESS')
 
     return render(request, 'news/pages/home.html', context={
         'news': page_obj,
