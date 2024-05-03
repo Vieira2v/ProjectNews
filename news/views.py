@@ -2,13 +2,16 @@ from django.shortcuts import render  # type: ignore # noqa: F401
 from news.models import News
 from django.http import Http404  # type: ignore # noqa: F401
 from utils.pagination import make_pagination
+import os
+
+PER_PAGE = int(os.environ.get('PER_PAGE', 6))
 
 
 def home(request):
     news = News.objects.filter(
         is_published=True,
     ).order_by('-id')
-    page_obj, pagination_range = make_pagination(request, news, 9)
+    page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
 
     return render(request, 'news/pages/home.html', context={
         'news': page_obj,
@@ -36,7 +39,7 @@ def international(request, category_id):
         category__id=category_id,
         is_published=True,
     ).order_by('-id')
-    page_obj, pagination_range = make_pagination(request, news, 9)
+    page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
 
     if not news:
         raise Http404('Not found')
@@ -53,7 +56,7 @@ def economy(request, category_id):
         category__id=category_id,
         is_published=True,
     ).order_by('-id')
-    page_obj, pagination_range = make_pagination(request, news, 9)
+    page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
 
     if not news:
         raise Http404('Not found')
@@ -70,7 +73,7 @@ def technology(request, category_id):
         category__id=category_id,
         is_published=True,
     ).order_by('-id')
-    page_obj, pagination_range = make_pagination(request, news, 9)
+    page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
 
     if not news:
         raise Http404('Not found')
@@ -87,7 +90,7 @@ def health(request, category_id):
         category__id=category_id,
         is_published=True,
     ).order_by('-id')
-    page_obj, pagination_range = make_pagination(request, news, 9)
+    page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
 
     if not news:
         raise Http404('Not found')
@@ -104,7 +107,7 @@ def science(request, category_id):
         category__id=category_id,
         is_published=True,
     ).order_by('-id')
-    page_obj, pagination_range = make_pagination(request, news, 9)
+    page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
 
     if not news:
         raise Http404('Not found')
@@ -121,7 +124,7 @@ def sport(request, category_id):
         category__id=category_id,
         is_published=True,
     ).order_by('-id')
-    page_obj, pagination_range = make_pagination(request, news, 9)
+    page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
 
     if not news:
         raise Http404('Not found')

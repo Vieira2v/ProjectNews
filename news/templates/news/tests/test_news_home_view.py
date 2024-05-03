@@ -2,6 +2,7 @@ from django.urls import reverse, resolve  # type: ignore # noqa: F401
 # Reverse é usado para buscar a url que eu quero.
 # Resolve é usado para saber qual função esta sendo usando por uma url.
 from news import views
+from unittest.mock import patch
 from .test_news_base import NewsTestBase  # type: ignore # noqa: F401
 
 
@@ -56,3 +57,19 @@ class NewsHomeViewsTest(NewsTestBase):
         # Meu cliente fez acesso a minha home.
         self.assertIn('No news found here',
                       response.content.decode('utf-8'))
+
+    @patch('news.views.PER_PAGE', new=3)
+    def test_news_home_is_paginated(self):
+        for i in range(9):
+            kwargs = {'author_data': {'username': f'u{i}'}, 'slug': f'r{i}'}
+            self.make_news(**kwargs)
+            # Noticias criadas.
+
+        response = self.client.get(reverse('news:home'))
+        news = response.context['news']
+        paginator = news.paginator
+
+        self.assertEqual(paginator.num_pages, 3)
+        self.assertEqual(len(paginator.get_page(1)), 3)
+        self.assertEqual(len(paginator.get_page(2)), 3)
+        self.assertEqual(len(paginator.get_page(3)), 3)
