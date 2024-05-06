@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "news",
+    "authors",
 ]
 
 MIDDLEWARE = [
@@ -132,7 +133,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MESSAGE_TAGS = {
     constants.DEBUG: 'message-debug',
     constants.ERROR: 'message-error',
-    constants.INFO: 'message-infor',
+    constants.INFO: 'message-info',
     constants.WARNING: 'message-warning',
     constants.SUCCESS: 'message-success',
 }

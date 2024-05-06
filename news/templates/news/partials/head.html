@@ -242,8 +242,60 @@
         color: #1c1c1c8b;
     }
 
+    /* Messages */
+
+    .messages-container {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 2rem;
+    }
+
+    .message {
+        padding: 1rem;
+        border-radius: 4px;
+        border: 1px solid #1c1c1c5b;
+        background: #4d4d4d2e;
+        color: #000000;
+    }
+
+    .message-error {
+        border: 1px solid #780101ec;
+        background: #f639394c;
+        color: #a01818;
+    }
+
+    .message-success {
+        border: 1px solid #028f20ec;
+        background: #6df5863f;
+        color: #12c143;
+    }
+
+    .message-warning {
+        border: 1px solid #b55b01e6;
+        background: #efa55153;
+        color: #b3631c;
+    }
+
+    .message-info {
+        border: 1px solid #c2b501;
+        background: #f4e34e56;
+        color: #b4a419;
+    }
+
+    .message-debug {
+        border: 1px solid #012978ec;
+        background: #5749f15c;
+        color: #16129f;
+    }
+
     /* Generics */
     .center {
         text-align: center;
+    }
+
+    @media (max-width: 600px) {
+        .main-content-list {
+            grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+        }
     }
 </style>

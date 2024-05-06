@@ -6,7 +6,8 @@ from django.conf import settings  # type: ignore # noqa: F401
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', include('news.urls'))
+    path('', include('news.urls')),
+    path('authors/', include('authors.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
