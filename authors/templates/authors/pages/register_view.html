@@ -3,31 +3,37 @@
 {% block title %}Register | {% endblock title %}
 
 {% block content %}
-    <div class="center container">
-        <h2>Register</h2>
-    </div>
-
     <div class="container">
         <form action="{% url "authors:create" %}" method="POST">
             {% csrf_token %}
 
             <div class="form-content form-content-grid">
+                <h1 class= "center">
+                    <i class="fas fa-newspaper"></i>
+                </h1>
+                <div class="center container">
+                    <h2>Create Account {{ request.session.number}}</h2>
+                </div>
                 {% for field in form %}
                     <div class="form-group">
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                        {{ field }}
-
+                        {{field}}
                         {% if field.help_text %}
                             <p class="help-text">{{ field.help_text }}</p>
                         {% endif %}
-
-                        {{ field.erros }}
+                        {{ field.errors }}
                     </div>
                 {% endfor %}
-            </div>
+                
+                {% if form.errors %}
+                    <div class="form-group message message-error">
+                      There are errors in the form, please fix them and send again.
+                    </div>
+                {% endif %}
 
-            <div class="form-group">
-                <button type="submit">Send</button>
+                <div class="form-group">
+                    <button type="submit">Send</button>
+                </div>
             </div>
         </form>
     </div>
