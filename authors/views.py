@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect  # type: ignore # noqa: F401
 from .forms import RegisterForm
 from django.http import Http404  # type: ignore # noqa: F401
+from django.contrib import messages  # type: ignore # noqa: F401
 
 
 def register_view(request):
@@ -19,5 +20,13 @@ def register_create(request):
     POST = request.POST
     request.session['register_form_data'] = POST
     form = RegisterForm(POST)
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Your user is created, please log in.')
+        # Aqui estou salvando o formulário na base de dados.
+
+        del (request.session['register_form_data'])
+        # Após salvar, estou limpando o formulário preenchido.
 
     return redirect('authors:register')

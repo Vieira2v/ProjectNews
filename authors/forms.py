@@ -1,21 +1,33 @@
+import re
+
 from django import forms  # type: ignore # noqa: F401
 from django.contrib.auth.models import User  # type: ignore # noqa: F401
 from django.core.exceptions import ValidationError  # type: ignore # noqa: F401
+
+
+def strong_password(password):
+    regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
+
+    if not regex.match(password):
+        raise ValidationError((
+            'Password must have at least one uppercase letter,'
+            'one lowercase letter and one number. The length should be'
+            'at least 8 characters.'), code='Invalid')
 
 
 class RegisterForm(forms.ModelForm):
 
     password = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Your password'
-        })
+        widget=forms.PasswordInput(),
+        validators=[strong_password],
+        label='Password',
     )
+
     confirm_password = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Repeat your password'
-        })
+        widget=forms.PasswordInput(),
+        label='Confirm password',
     )
 
     class Meta:
@@ -33,7 +45,6 @@ class RegisterForm(forms.ModelForm):
             'last_name': 'Last name',
             'username': 'Username',
             'email': 'E-mail',
-            'password': 'Password',
         }
 
         error_messages = {
