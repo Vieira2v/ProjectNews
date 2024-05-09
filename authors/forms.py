@@ -17,19 +17,6 @@ def strong_password(password):
 
 class RegisterForm(forms.ModelForm):
 
-    password = forms.CharField(
-        required=True,
-        widget=forms.PasswordInput(),
-        validators=[strong_password],
-        label='Password',
-    )
-
-    confirm_password = forms.CharField(
-        required=True,
-        widget=forms.PasswordInput(),
-        label='Confirm password',
-    )
-
     class Meta:
         model = User
         fields = [
@@ -40,18 +27,45 @@ class RegisterForm(forms.ModelForm):
             'password',
         ]
 
-        labels = {
-            'first_name': 'First name',
-            'last_name': 'Last name',
-            'username': 'Username',
-            'email': 'E-mail',
-        }
+    first_name = forms.CharField(
+        label='First name',
+        error_messages={'required': 'Write your first name'},
+    )
 
-        error_messages = {
-            'username': {
-                'required': 'This field must not be empty',
-            }
-        }
+    last_name = forms.CharField(
+        label='Last name',
+        error_messages={'required': 'Write your last name'},
+    )
+
+    username = forms.CharField(
+        label='Username',
+        error_messages={
+            'required':
+            'Username must have letters, numbers or one of those @.+-_. '
+            'The length should be between 4 and 150 characters.',
+            'min_length': 'Username must have at least 4 characters',
+            'max_length': 'Username must have less than 150 characters',
+            },
+        min_length=4, max_length=150,
+    )
+
+    email = forms.CharField(
+        label='E-mail',
+        error_messages={'required': 'Email is required'},
+    )
+
+    password = forms.CharField(
+        widget=forms.PasswordInput(),
+        validators=[strong_password],
+        label='Password',
+        error_messages={'required': 'Password must not be empty'}
+    )
+
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(),
+        label='Confirm password',
+        error_messages={'required': 'Please, repeat your passsword'}
+    )
 
     def clean(self):
         cleaned_data = super().clean()
