@@ -73,3 +73,10 @@ class NewsHomeViewsTest(NewsTestBase):
         self.assertEqual(len(paginator.get_page(1)), 3)
         self.assertEqual(len(paginator.get_page(2)), 3)
         self.assertEqual(len(paginator.get_page(3)), 3)
+
+    def test_invalid_page_query_uses_page_one(self):
+        response = self.client.get(reverse('news:home') + '?page=1A')
+        self.assertEqual(
+            response.context['news'].number,
+            1
+            )
