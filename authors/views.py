@@ -22,7 +22,9 @@ def register_create(request):
     form = RegisterForm(POST)
 
     if form.is_valid():
-        form.save()
+        user = form.save(commit=False)  # Aqui só esta salvando na variavel.
+        user.set_password(user.password)  # Criptográfa a senha do user.
+        user.save()  # Aqui ja esta salvando na base de dados com a crip.
         messages.success(request, 'Your user is created, please log in.')
         # Aqui estou salvando o formulário na base de dados.
 

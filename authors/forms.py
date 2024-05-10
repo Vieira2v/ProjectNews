@@ -17,16 +17,6 @@ def strong_password(password):
 
 class RegisterForm(forms.ModelForm):
 
-    class Meta:
-        model = User
-        fields = [
-            'first_name',
-            'last_name',
-            'username',
-            'email',
-            'password',
-        ]
-
     first_name = forms.CharField(
         label='First name',
         error_messages={'required': 'Write your first name'},
@@ -49,7 +39,7 @@ class RegisterForm(forms.ModelForm):
         min_length=4, max_length=150,
     )
 
-    email = forms.CharField(
+    email = forms.EmailField(
         label='E-mail',
         error_messages={'required': 'Email is required'},
     )
@@ -66,6 +56,27 @@ class RegisterForm(forms.ModelForm):
         label='Confirm password',
         error_messages={'required': 'Please, repeat your passsword'}
     )
+
+    class Meta:
+        model = User
+        fields = [
+            'first_name',
+            'last_name',
+            'username',
+            'email',
+            'password',
+        ]
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email', '')
+        exists = User.objects.filter(email=email).exists()
+
+        if exists:
+            raise ValidationError(
+                'User e-mail is already in use', code='invalid',
+            )
+
+        return email
 
     def clean(self):
         cleaned_data = super().clean()

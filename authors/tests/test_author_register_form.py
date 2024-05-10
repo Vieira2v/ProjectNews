@@ -96,8 +96,17 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
     def test_form_valid(self):
         self.form_data['password'] = '@A123abc123'
         self.form_data['confirm_password'] = '@A123abc123'
+
         url = reverse('authors:create')
         response = self.client.post(url, data=self.form_data, follow=True)
 
         msg = 'Your user is created, please log in.'
         self.assertIn(msg, response.content.decode('utf-8'))
+
+    def test_email_is_duplicate(self):
+        self.form_data['email'] = 'email@anyemail.com'
+
+        url = reverse('authors:create')
+        response = self.client.post(url, data=self.form_data, follow=True)
+
+        self.assertIn(response.is_invalid())
