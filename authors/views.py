@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect  # type: ignore # noqa: F401
 from .forms import RegisterForm
 from django.http import Http404  # type: ignore # noqa: F401
 from django.contrib import messages  # type: ignore # noqa: F401
+from django.urls import reverse  # type: ignore # noqa: F401
 
 
 def register_view(request):
@@ -10,6 +11,7 @@ def register_view(request):
     form = RegisterForm(register_form_data)
     return render(request, 'authors/pages/register_view.html', {
         'form': form,
+        'form_action': reverse('authors:create'),
     })
 
 
