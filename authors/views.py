@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect  # type: ignore # noqa: F401
-from .forms import RegisterForm
+from .forms import LoginForm, RegisterForm
 from django.http import Http404  # type: ignore # noqa: F401
 from django.contrib import messages  # type: ignore # noqa: F401
 from django.urls import reverse  # type: ignore # noqa: F401
@@ -11,7 +11,7 @@ def register_view(request):
     form = RegisterForm(register_form_data)
     return render(request, 'authors/pages/register_view.html', {
         'form': form,
-        'form_action': reverse('authors:create'),
+        'form_action': reverse('authors:register_create'),
     })
 
 
@@ -34,3 +34,15 @@ def register_create(request):
         # Após salvar, estou limpando o formulário preenchido.
 
     return redirect('authors:register')
+
+
+def login_view(request):
+    form = LoginForm()
+    return render(request, 'authors/pages/login.html', {
+        'form': form,
+        'form_action': reverse('authors:login_create')
+    })
+
+
+def login_create(request):
+    return render(request, 'authors/pages/login.html')
