@@ -87,7 +87,7 @@ li {
 
 .main-content-container {
     padding-top: 3rem;
-    padding-bottom: 29rem;
+    padding-bottom: 34rem;
 }
 
 .main-content {
@@ -267,11 +267,24 @@ li {
     margin-top: 1.5rem;
 }
 
-.form-content button {
+.form-group button {
     padding: 1rem 2rem;
     border: none;
     background: #000000;
     color: rgb(255, 255, 255);
+}
+
+.plaintext-button {
+    display: inline;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.6rem;
+    color: #807cff;
+}
+
+.inline-form {
+    display: inline;
 }
 
 /* Messages */

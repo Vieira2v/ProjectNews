@@ -11,8 +11,17 @@
                 <h1 class= "center">
                     <i class="fas fa-newspaper"></i>
                 </h1>
-                <div class="center container">
+                <div class="center">
                     <h2>Login</h2>
+                    {% if request.user.is_authenticated %}
+                        <p>
+                            Your are logged in with
+                            {{  request.user.username }}.
+                            Please,
+                            <a href="{% url "authors:logout" %}" method="POST">click here</a> to logout
+                        </p>
+                    
+                    {% endif %}
                 </div>
 
                 {% include "global/partials/messages.html" %}

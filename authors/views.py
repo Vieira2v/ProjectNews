@@ -3,6 +3,8 @@ from .forms import LoginForm, RegisterForm
 from django.http import Http404  # type: ignore # noqa: F401
 from django.contrib import messages  # type: ignore # noqa: F401
 from django.urls import reverse  # type: ignore # noqa: F401
+from django.contrib.auth import authenticate, login, logout  # type: ignore
+from django.contrib.auth.decorators import login_required  # type: ignore
 
 
 def register_view(request):
@@ -31,6 +33,7 @@ def register_create(request):
         # Aqui estou salvando o formulário na base de dados.
 
         del (request.session['register_form_data'])
+        return redirect(reverse('authors:login'))
         # Após salvar, estou limpando o formulário preenchido.
 
     return redirect('authors:register')
@@ -45,4 +48,30 @@ def login_view(request):
 
 
 def login_create(request):
-    return render(request, 'authors/pages/login.html')
+    if not request.POST:
+        raise Http404()
+
+    form = LoginForm(request.POST)
+    login_url = reverse('authors:login')
+
+    if form.is_valid():
+        authenticated_user = authenticate(
+            username=form.cleaned_data.get('username', ''),
+            password=form.cleaned_data.get('password', ''),
+        )
+
+        if authenticated_user is not None:
+            messages.success(request, 'Your are logged in.')
+            login(request, authenticated_user)
+        else:
+            messages.error(request, 'Invalid crredentials.')
+    else:
+        messages.error(request, 'Invalid username or password.')
+
+    return redirect(login_url)
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def logout_view(request):
+    logout(request)
+    return redirect('authors:login')
