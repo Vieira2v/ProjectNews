@@ -60,10 +60,8 @@ class NewsHomeViewsTest(NewsTestBase):
 
     @patch('news.views.PER_PAGE', new=3)
     def test_news_home_is_paginated(self):
-        for i in range(9):
-            kwargs = {'author_data': {'username': f'u{i}'}, 'slug': f'r{i}'}
-            self.make_news(**kwargs)
-            # Noticias criadas.
+        self.make_news_in_batch(qtd=9)
+        # Noticias criadas.
 
         response = self.client.get(reverse('news:home'))
         news = response.context['news']

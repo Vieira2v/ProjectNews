@@ -3,8 +3,7 @@ from news.models import Category, News
 from django.contrib.auth.models import User  # type: ignore # noqa: F401
 
 
-class NewsTestBase(TestCase):
-
+class NewsMixin:
     def make_category(self, name='Category'):
         return Category.objects.create(name=name)
 
@@ -56,3 +55,18 @@ class NewsTestBase(TestCase):
             # Este trecho de código acima é para dar suporte há todos
             # os meus testes, todos os testes vão ter 1 notícia criada.
         )
+
+    def make_news_in_batch(self, qtd=10):
+        news = []
+        for i in range(qtd):
+            kwargs = {'author_data': {'username': f'u{i}'}, 'slug': f'r{i}'}
+            notice = self.make_news(**kwargs)
+            news.append(notice)
+        return news
+
+
+class NewsTestBase(TestCase, NewsMixin):
+    def setUp(self) -> None:
+        return super().setUp()
+
+    # Tudo que tem no NewsMixin, tem nesta classe tbm.
