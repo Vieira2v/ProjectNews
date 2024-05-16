@@ -59,7 +59,11 @@ class NewsMixin:
     def make_news_in_batch(self, qtd=10):
         news = []
         for i in range(qtd):
-            kwargs = {'author_data': {'username': f'u{i}'}, 'slug': f'r{i}'}
+            kwargs = {
+                'title': f'News Title {i}',
+                'slug': f'r{i}',
+                'author_data': {'username': f'u{i}'}
+                }
             notice = self.make_news(**kwargs)
             news.append(notice)
         return news
