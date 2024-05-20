@@ -42,7 +42,11 @@ def international(request, category_id):
     page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
 
     if not news:
-        raise Http404('Not found')
+        return render(request, 'news/pages/international.html', context={
+            'news': None,
+            'pagination_range': None,
+            'title': 'No news International found - Category |'
+        })
 
     return render(request, 'news/pages/international.html', context={
         'news': page_obj,
@@ -59,7 +63,11 @@ def economy(request, category_id):
     page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
 
     if not news:
-        raise Http404('Not found')
+        return render(request, 'news/pages/economy.html', context={
+            'news': None,
+            'pagination_range': None,
+            'title': 'No news Economy found - Category |'
+        })
 
     return render(request, 'news/pages/economy.html', context={
         'news': page_obj,
@@ -76,7 +84,11 @@ def technology(request, category_id):
     page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
 
     if not news:
-        raise Http404('Not found')
+        return render(request, 'news/pages/technology.html', context={
+                'news': None,
+                'pagination_range': None,
+                'title': 'No news Technology found - Category |'
+        })
 
     return render(request, 'news/pages/technology.html', context={
         'news': page_obj,
@@ -92,8 +104,12 @@ def health(request, category_id):
     ).order_by('-id')
     page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
 
-    if not news:
-        raise Http404('Not found')
+    if not news.exists():
+        return render(request, 'news/pages/health.html', context={
+            'news': None,
+            'pagination_range': None,
+            'title': 'No news Health found - Health |'
+        })
 
     return render(request, 'news/pages/health.html', context={
         'news': page_obj,
@@ -110,7 +126,11 @@ def science(request, category_id):
     page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
 
     if not news:
-        raise Http404('Not found')
+        return render(request, 'news/pages/science.html', context={
+            'news': None,
+            'pagination_range': None,
+            'title': 'No news Science found - Category |'
+        })
 
     return render(request, 'news/pages/science.html', context={
         'news': page_obj,
@@ -127,7 +147,11 @@ def sport(request, category_id):
     page_obj, pagination_range = make_pagination(request, news, PER_PAGE)
 
     if not news:
-        raise Http404('Not found')
+        return render(request, 'news/pages/sport.html', context={
+            'news': None,
+            'pagination_range': None,
+            'title': 'No news Sport found - Category |'
+        })
 
     return render(request, 'news/pages/sport.html', context={
         'news': page_obj,
