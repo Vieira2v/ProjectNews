@@ -1,0 +1,8 @@
+{% if request.user.is_authenticated %}
+    <p>
+        Your are logged in with
+        {{  request.user.username }}.
+        Please,
+        <a href="{% url "authors:logout" %}" method="POST">click here</a> to logout
+    </p>
+{% endif %}
