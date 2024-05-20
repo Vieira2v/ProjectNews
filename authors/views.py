@@ -64,7 +64,7 @@ def login_create(request):
             messages.success(request, 'Your are logged in.')
             login(request, authenticated_user)
         else:
-            messages.error(request, 'Invalid crredentials.')
+            messages.error(request, 'Invalid credentials.')
     else:
         messages.error(request, 'Invalid username or password.')
 
@@ -74,4 +74,5 @@ def login_create(request):
 @login_required(login_url='authors:login', redirect_field_name='next')
 def logout_view(request):
     logout(request)
+    messages.success(request, 'Logout realized with success!')
     return redirect('authors:login')
