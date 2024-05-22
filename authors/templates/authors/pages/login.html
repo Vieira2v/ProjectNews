@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container">
-        <form action="{{ form_action }}" method="POST">
+        <form action="{{ form_action }}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
             <div class="form-content form-content-grid">
@@ -18,26 +18,28 @@
 
                 {% include "global/partials/messages.html" %}
 
-                {% for field in form %}
-                    <div class="form-group">
-                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                        {{field}}
-                        {% if field.help_text %}
-                            <p class="help-text">{{ field.help_text }}</p>
-                        {% endif %}
-                        {{ field.errors }}
-                    </div>
-                {% endfor %}
+                {% if not user.is_authenticated %}
+                    {% for field in form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{field}}
+                            {% if field.help_text %}
+                                <p class="help-text">{{ field.help_text }}</p>
+                            {% endif %}
+                            {{ field.errors }}
+                        </div>
+                    {% endfor %}
                 
-                {% if form.errors %}
-                    <div class="form-group message message-error">
-                      There are errors in the form, please fix them and send again.
+                    {% if form.errors %}
+                        <div class="form-group message message-error">
+                        There are errors in the form, please fix them and send again.
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <button type="submit">Send</button>
                     </div>
                 {% endif %}
-
-                <div class="form-group">
-                    <button type="submit">Send</button>
-                </div>
             </div>
         </form>
     </div>

@@ -2,7 +2,7 @@
     <p>
         Your are logged in with
         {{  request.user.username }}.
-        Please,
-        <a href="{% url "authors:logout" %}" method="POST">click here</a> to logout
+        <a class="link-dashboard" href="{% url "authors:dashboard" %}">See your news</a> or 
+        <a class="link-dashboard" href="{% url "authors:logout" %}" method="POST">click here</a> to logout
     </p>
 {% endif %}

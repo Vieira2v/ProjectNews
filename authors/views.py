@@ -5,6 +5,8 @@ from django.contrib import messages  # type: ignore # noqa: F401
 from django.urls import reverse  # type: ignore # noqa: F401
 from django.contrib.auth import authenticate, login, logout  # type: ignore
 from django.contrib.auth.decorators import login_required  # type: ignore
+from news.models import News
+from .forms.news_forms import AuthorNewsForm
 
 
 def register_view(request):
@@ -79,4 +81,49 @@ def logout_view(request):
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def dashboard(request):
-    return render(request, 'authors/pages/dashboard.html')
+    news = News.objects.filter(
+        is_published=False,
+        author=request.user
+    )
+    return render(request, 'authors/pages/dashboard.html',
+                  context={
+                      'news': news
+                  })
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def dashboard_news_edit(request, id):
+    news = News.objects.filter(
+        is_published=False,
+        author=request.user,
+        pk=id,
+    ).first()
+
+    if not news:
+        raise Http404()
+
+    form = AuthorNewsForm(
+        data=request.POST or None,
+        files=request.FILES or None,
+        instance=news
+    )
+
+    if form.is_valid():
+        news = form.save(commit=False)
+
+        news.author = request.user
+        news.news_content_is_html = False
+        news.is_published = False
+
+        news.save()
+
+        messages.success(request, 'Your news was saved successfully!')
+        return redirect(reverse('authors:dashboard_news_edit', args=(id,)))
+
+    return render(
+        request,
+        'authors/pages/dashboard_news.html',
+        context={
+            'form': form
+        }
+    )

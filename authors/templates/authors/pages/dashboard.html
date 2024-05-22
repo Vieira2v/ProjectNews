@@ -8,6 +8,22 @@
 </div>
 <div class="center">
     {% include "authors/partials/login_message.html" %}
+
+    <div class="authors-dashboard-container">
+        <h3>Your news</h3>
+
+        <ul>
+            {% for new in news %}
+                <li class="link-dashboard">
+                    <a class="title-news-dashboard" href="{% url "authors:dashboard_news_edit" new.id %}"> {{ new.title }}</a>
+                </li>
+            {% empty %}
+                <li>
+                    <p>You do not have news, please create one.</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
 
 {% include "global/partials/messages.html" %}

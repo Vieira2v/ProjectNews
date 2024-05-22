@@ -26,6 +26,10 @@ h6 {
     font-style: normal;
 }
 
+img {
+    max-width: 100%;
+}
+
 .container {
     max-width: 144rem;
     margin: 0 auto;
@@ -251,7 +255,8 @@ li {
     margin: 0.5rem 0;
 }
 
-.form-content input {
+.form-content input,
+.form-content textarea {
     width: 100%;
     padding: 1rem;
     border-radius: .4rem;
@@ -286,6 +291,19 @@ li {
 .inline-form {
     display: inline;
 }
+
+.span-2 {
+    grid-column: span 2;
+  }
+
+  .link-dashboard {
+    color: #000000;
+    font-weight:bold;
+  }
+
+  .title-news-dashboard {
+    color: #3776ffd5;
+  }
 
 /* Messages */
 
@@ -331,6 +349,29 @@ li {
     border: 1px solid #012978ec;
     background: #5749f15c;
     color: #16129f;
+}
+
+/* Authors */
+.authors-dashboard-container {
+    max-width: 64rem;
+    text-align: left;
+    padding: 12rem;
+    margin: 0 auto;
+    margin-top: 2rem;
+    border: #00000018;
+    border-style: groove;
+    border-radius: .5rem;
+    padding: 4.5rem;
+}
+
+.authors-dashboard-container h3,
+.authors-dashboard-container p,
+.authors-dashboard-container ul {
+    list-style-type: none;
+    margin: 1rem 0;
+}
+.authors-dashboard-container li {
+    padding: 1rem;
 }
 
 /* Generics */

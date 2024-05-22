@@ -1,0 +1,46 @@
+{% extends "global/base.html" %}
+
+{% block title %}Dashboard News | {% endblock title %}
+
+{% block content %}
+<div class="center">
+    <h2>Dashboard News</h2>
+</div>
+<div class="center">
+    {% include "global/partials/messages.html" %}
+    {% include "authors/partials/login_message.html" %}
+</div>
+<div class="authors-dashboard-container">
+    <form action="{{ form_action }}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-content {{ field.field.widget.attrs.class }}">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{field}}
+                {% if field.help_text %}
+                    <p class="help-text">{{ field.help_text }}</p>
+                {% endif %}
+                {{ field.errors }}
+            </div>
+
+            {% if field.name == 'cover' and field.value.url %}
+                <div class="span-2">
+                    <img src="{{ field.value.url }}" alt="News cover {{ new.title }}">
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        {% if form.errors %}
+            <div class="form-group message message-error">
+            There are errors in the form, please fix them and send again.
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <button type="submit">Send</button>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
