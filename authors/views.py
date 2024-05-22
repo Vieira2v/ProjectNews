@@ -127,3 +127,54 @@ def dashboard_news_edit(request, id):
             'form': form
         }
     )
+
+
+def dashboard_news_new(request):
+    form = AuthorNewsForm(
+        data=request.POST or None,
+        files=request.FILES or None,
+    )
+
+    if form.is_valid():
+        news = form.save(commit=False)
+
+        news.author = request.user
+        news.news_content_is_html = False
+        news.is_published = False
+
+        news.save()
+
+        messages.success(request, 'Your news was saved successfully!')
+        return redirect(reverse
+                        ('authors:dashboard_news_edit', args=(news.id,)))
+
+    return render(
+        request,
+        'authors/pages/dashboard_news.html',
+        context={
+            'form': form,
+            'form_action': reverse('authors:dashboard_news_new')
+        }
+    )
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def dashboard_news_delete(request):
+    if not request.POST:
+        raise Http404()
+
+    POST = request.POST
+    id = POST.get('id')
+
+    news = News.objects.filter(
+        is_published=False,
+        author=request.user,
+        pk=id,
+    ).first()
+
+    if not news:
+        raise Http404()
+
+    news.delete()
+    messages.success(request, 'Deleted successfully')
+    return redirect(reverse('authors:dashboard'))

@@ -8,6 +8,7 @@
 </div>
 <div class="center">
     {% include "authors/partials/login_message.html" %}
+    {% include 'global/partials/messages.html' %}
 
     <div class="authors-dashboard-container">
         <h3>Your news</h3>
@@ -16,6 +17,14 @@
             {% for new in news %}
                 <li class="link-dashboard">
                     <a class="title-news-dashboard" href="{% url "authors:dashboard_news_edit" new.id %}"> {{ new.title }}</a>
+                    <form 
+                    class="inline-form form-delete" 
+                    action="{% url "authors:dashboard_news_delete" %}" 
+                    method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ new.id }}">
+                        <button class="plaintext-button" type="submit">❌</button>
+                    </form>
                 </li>
             {% empty %}
                 <li>
@@ -25,6 +34,4 @@
         </ul>
     </div>
 </div>
-
-{% include "global/partials/messages.html" %}
 {% endblock content %}
