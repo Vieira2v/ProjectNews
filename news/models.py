@@ -1,5 +1,7 @@
 from django.db import models  # type: ignore # noqa: F401
 from django.contrib.auth.models import User  # type: ignore # noqa: F401
+from django.urls import reverse  # type: ignore # noqa: F401
+from django.utils.text import slugify  # type: ignore # noqa: F401
 
 
 # Uma tabela. MySQL
@@ -33,3 +35,16 @@ class News(models.Model):
 # Função criada para aparecer o titulo da noticia la na admin
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("news:detail", args=(self.id,))
+    # Função criada para criar um botão para redirecionar a receita,
+    # vista na admin para o site, 'View on site'
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = f'{slugify(self.title)}'
+            self.slug = slug
+
+        return super().save(*args, **kwargs)
+    # Função criada para criar uma slug de acordo o title da noticia.

@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect  # type: ignore # noqa: F401
-from .forms import LoginForm, RegisterForm
+from authors.forms import LoginForm, RegisterForm
 from django.http import Http404  # type: ignore # noqa: F401
 from django.contrib import messages  # type: ignore # noqa: F401
 from django.urls import reverse  # type: ignore # noqa: F401
 from django.contrib.auth import authenticate, login, logout  # type: ignore
 from django.contrib.auth.decorators import login_required  # type: ignore
 from news.models import News
-from .forms.news_forms import AuthorNewsForm
+from authors.forms.news_forms import AuthorNewsForm
 
 
 def register_view(request):
