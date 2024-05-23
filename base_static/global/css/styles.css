@@ -58,7 +58,7 @@ a {
     padding: 1rem;
 }
 
-li {
+.main-container-category li {
     display: inline-block;
     position: relative;
     z-index: 2;
