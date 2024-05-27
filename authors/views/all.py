@@ -88,25 +88,3 @@ def dashboard(request):
                   context={
                       'news': news
                   })
-
-
-@login_required(login_url='authors:login', redirect_field_name='next')
-def dashboard_news_delete(request):
-    if not request.POST:
-        raise Http404()
-
-    POST = request.POST
-    id = POST.get('id')
-
-    news = News.objects.filter(
-        is_published=False,
-        author=request.user,
-        pk=id,
-    ).first()
-
-    if not news:
-        raise Http404()
-
-    news.delete()
-    messages.success(request, 'Deleted successfully')
-    return redirect(reverse('authors:dashboard'))

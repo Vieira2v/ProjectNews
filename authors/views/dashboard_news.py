@@ -66,3 +66,15 @@ class DashboardNews(View):
                     news.id,)))
 
         return self.render_news(form)
+
+
+@method_decorator(
+        login_required(login_url='authors:login', redirect_field_name='next'),
+        name='dispatch'
+    )
+class DashboardNewsDelete(DashboardNews):
+    def post(self, *args, **kwargs):
+        news = self.get_news(self.request.POST.get('id'))
+        news.delete()
+        messages.success(self.request, 'Deleted successfully')
+        return redirect(reverse('authors:dashboard'))

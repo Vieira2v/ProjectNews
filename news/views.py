@@ -1,7 +1,9 @@
+from django.db.models.query import QuerySet  # type: ignore # noqa: F401
 from django.shortcuts import render  # type: ignore # noqa: F401
 from news.models import News
 from django.http import Http404  # type: ignore # noqa: F401
 from utils.pagination import make_pagination
+from django.views.generic import ListView  # type: ignore # noqa: F401
 import os
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 6))

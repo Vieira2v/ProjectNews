@@ -15,7 +15,7 @@ urlpatterns = [
          views.DashboardNews.as_view(),
          name='dashboard_news_new'),
     path('dashboard/news/delete/',
-         views.dashboard_news_delete,
+         views.DashboardNewsDelete.as_view(),
          name='dashboard_news_delete'),
     path('dashboard/news/<int:id>/edit/',
          views.DashboardNews.as_view(),
