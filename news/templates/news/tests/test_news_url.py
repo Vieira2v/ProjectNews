@@ -9,7 +9,7 @@ class NewsURLsTest(TestCase):
         self.assertEqual(url, '/')
 
     def test_news_detail_url_is_correct(self):
-        url = reverse('news:detail', kwargs={'id': 1})
+        url = reverse('news:detail', kwargs={'pk': 1})
         self.assertEqual(url, '/news/1/')
 
     def test_news_international_url_is_correct(self):

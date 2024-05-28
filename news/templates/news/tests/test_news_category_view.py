@@ -9,7 +9,7 @@ class NewsCategoryViewsTest(NewsTestBase):
     def test_news_international_views_function_is_correct(self):
         view = resolve(
             reverse('news:international', kwargs={'category_id': 1}))
-        self.assertIs(view.func, views.international)
+        self.assertIs(view.func.view_class, views.NewsListViewIntenational)
 
     def test_news_international_template_loads_news(self):
         needed_title = 'This is a international page'
@@ -30,7 +30,7 @@ class NewsCategoryViewsTest(NewsTestBase):
     def test_news_economy_views_function_is_correct(self):
         view = resolve(
             reverse('news:economy', kwargs={'category_id': 1}))
-        self.assertIs(view.func, views.economy)
+        self.assertIs(view.func.view_class, views.NewsListViewEconomy)
 
     def test_news_economy_views_returns_404_if_no_news_found(self):
         response = self.client.get(
@@ -51,7 +51,7 @@ class NewsCategoryViewsTest(NewsTestBase):
     def test_news_technology_views_function_is_correct(self):
         view = resolve(
             reverse('news:technology', kwargs={'category_id': 1}))
-        self.assertIs(view.func, views.technology)
+        self.assertIs(view.func.view_class, views.NewsListViewTechnology)
 
     def test_news_technology_views_returns_404_if_no_news_found(self):
         response = self.client.get(
@@ -72,7 +72,7 @@ class NewsCategoryViewsTest(NewsTestBase):
     def test_news_health_views_function_is_correct(self):
         view = resolve(
             reverse('news:health', kwargs={'category_id': 1}))
-        self.assertIs(view.func, views.health)
+        self.assertIs(view.func.view_class, views.NewsListViewHealth)
 
     def test_news_health_views_returns_404_if_no_news_found(self):
         response = self.client.get(
@@ -93,7 +93,7 @@ class NewsCategoryViewsTest(NewsTestBase):
     def test_news_science_views_function_is_correct(self):
         view = resolve(
             reverse('news:science', kwargs={'category_id': 1}))
-        self.assertIs(view.func, views.science)
+        self.assertIs(view.func.view_class, views.NewsListViewScience)
 
     def test_news_science_views_returns_404_if_no_news_found(self):
         response = self.client.get(
@@ -114,7 +114,7 @@ class NewsCategoryViewsTest(NewsTestBase):
     def test_news_sport_views_function_is_correct(self):
         view = resolve(
             reverse('news:sport', kwargs={'category_id': 1}))
-        self.assertIs(view.func, views.sport)
+        self.assertIs(view.func.view_class, views.NewsListViewSport)
 
     def test_news_sport_views_returns_404_if_no_news_found(self):
         response = self.client.get(

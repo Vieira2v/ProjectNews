@@ -9,7 +9,7 @@ from .test_news_base import NewsTestBase  # type: ignore # noqa: F401
 class NewsHomeViewsTest(NewsTestBase):
     def test_news_home_views_function_is_correct(self):
         view = resolve(reverse('news:home'))
-        self.assertIs(view.func, views.home)
+        self.assertIs(view.func.view_class, views.NewsListViewHome)
         # view.func é a função retornada pelo resolve na variavel view.
 
     def test_news_home_view_returns_status_code_200_OK(self):
