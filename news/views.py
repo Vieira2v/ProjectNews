@@ -22,6 +22,14 @@ class NewsListViewBase(ListView):
         qs = qs.filter(
             is_published=True,
         )
+
+        # Isso evita consultas N+1 na minha base de dados.
+        # Automaticamente deixa o nosso sistema mais rapido.
+        # Estou usando select_related, pq as noticias só podem,
+        # ter uma categoria e um authors, caso contrário usária,
+        # prefetch_related.
+        qs = qs.select_related('author', 'category')
+
         return qs
 
     # Manipulação do contexto da pagina,
@@ -66,6 +74,7 @@ class NewsListViewIntenational(NewsListViewBase):
             is_published=True,
             category__id=category_id,
         )
+
         return qs
 
     def get_context_data(self, *args, **kwargs):
