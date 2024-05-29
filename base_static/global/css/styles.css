@@ -382,6 +382,10 @@ a {
     text-align: center;
 }
 
+.hidden-text {
+    display: none;
+}
+
 @media (max-width: 600px) {
     .main-content-list {
         grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
