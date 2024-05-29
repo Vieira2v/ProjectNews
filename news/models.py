@@ -2,6 +2,8 @@ from django.db import models  # type: ignore # noqa: F401
 from django.contrib.auth.models import User  # type: ignore # noqa: F401
 from django.urls import reverse  # type: ignore # noqa: F401
 from django.utils.text import slugify  # type: ignore # noqa: F401
+from collections import defaultdict  # type: ignore  # noqa: F401
+from django.forms import ValidationError  # type: ignore
 
 
 # Uma tabela. MySQL
@@ -48,3 +50,20 @@ class News(models.Model):
 
         return super().save(*args, **kwargs)
     # Função criada para criar uma slug de acordo o title da noticia.
+
+    # Validação para n ter noticias com o msm titulo.
+    def clean(self, *args, **kwargs):
+        error_messages = defaultdict(list)
+
+        news_from_db = News.objects.filter(
+            title__iexact=self.title
+        ).first()
+
+        if news_from_db:
+            if news_from_db.pk != self.pk:
+                error_messages['title'].append(
+                    'Found news with the same title'
+                )
+
+        if error_messages:
+            raise ValidationError(error_messages)
