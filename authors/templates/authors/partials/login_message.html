@@ -1,9 +1,10 @@
 {% if request.user.is_authenticated %}
-    <p>
+    <div class="login-message">
         Your are logged in with
         {{  request.user.username }}.
         <a class="link-dashboard" href="{% url "authors:dashboard" %}">See your news</a>, 
         <a class="link-dashboard" href="{% url "authors:dashboard_news_new" %}">create a new news</a> or 
-        <a class="link-dashboard" href="{% url "authors:logout" %}" method="POST">click here</a> to logout
-    </p>
+        {% include "authors/partials/form_logout.html" %}
+        <a class="authors-logout-link" href="#">click here</a> to logout.
+    </div>
 {% endif %}
