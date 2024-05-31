@@ -13,7 +13,7 @@ class NewsModelsTest(NewsTestBase):
         news = News(
             category=self.make_category(name='Test Category'),
             author=self.make_author(username='testuser'),
-            title='News Title',
+            title='Qualquer Coisa',
             description='News Description',
             slug='new-slug',
             news_content='News Content',

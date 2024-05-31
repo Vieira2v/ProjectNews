@@ -29,7 +29,6 @@ class NewsListViewBase(ListView):
         # ter uma categoria e um authors, caso contrário usária,
         # prefetch_related.
         qs = qs.select_related('author', 'category')
-        qs = qs.prefetch_related('author__profile')
 
         return qs
 
