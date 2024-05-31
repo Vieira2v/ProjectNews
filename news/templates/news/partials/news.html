@@ -14,6 +14,9 @@
 
     <div class="news-author">
         <span class="news-author-item">
+            {% if new.author.profile %}
+                <a href="{% url "authors:profile" new.author.profile.id %}">
+            {% endif %}
             <i class="fas fa-user">
                 {% if new.author is not None %}
                     {% if new.author.first_name %}
@@ -25,6 +28,9 @@
                     Anonymous
                 {% endif %}
             </i>
+            {% if new.author.profile %}
+                </a>
+            {% endif %}
         </span>
 
         <span class="news-author-item">

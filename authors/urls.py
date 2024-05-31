@@ -20,4 +20,7 @@ urlpatterns = [
     path('dashboard/news/<int:id>/edit/',
          views.DashboardNews.as_view(),
          name='dashboard_news_edit'),
+    path('profile/<int:id>/',
+         views.ProfileView.as_view(),
+         name='profile'),
 ]
